@@ -1,0 +1,241 @@
+{
+    "author": "SYSTEM",
+    "composite": false,
+    "containingTemplates": [],
+    "createTime": 1613496381839,
+    "customParamsOrder": false,
+    "description": "IPsec for Cloud Router - System Default",
+    "deviceTypes": [
+        {
+            "productFamily": "Routers",
+            "productSeries": "Cisco Cloud Services Router 1000V Series"
+        }
+    ],
+    "documentDatabase": false,
+    "id": "2d14b0f8-728f-49ee-bab9-b886545b85ef",
+    "language": "VELOCITY",
+    "lastUpdateTime": 1613496381839,
+    "latestVersionTime": 1613496382019,
+    "name": "IPsec for Cloud Router - System Default",
+    "parentTemplateId": "2d14b0f8-728f-49ee-bab9-b886545b85ef",
+    "projectAssociated": true,
+    "projectId": "454b5a10-f71a-400f-bb97-0a3d45e0817b",
+    "projectName": "Cloud DayN Templates",
+    "rollbackTemplateParams": [],
+    "softwareType": "IOS-XE",
+    "softwareVariant": "XE",
+    "tags": [
+        {
+            "id": "5df3094a-a552-4af9-bf43-72f0cd7a1acf",
+            "name": "cloud-ipsec"
+        }
+    ],
+    "templateContent": "!--- IPsec Tunnel Config ---\ninterface Tunnel12\nip address $CloudRouterTunnelIpAddress $CloudRouterTunnelSubnetMask\ntunnel source $CloudRouterTunnelSource\ntunnel destination $BranchRouterPublicIpAddress\ntunnel protection ipsec profile csr-prof\nip mtu $mtu\nip tcp adjust-mss 1360\ntunnel mode ipsec ipv4\n!--- BGP Config ---\nrouter bgp $AutonomousSystemNumber\nneighbor $BranchRouterTunnelIP remote-as $NeighborBgpASN\n!\naddress-family ipv4\nneighbor $BranchRouterTunnelIP activate\n!\n",
+    "templateParams": [
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "INTEGER",
+            "defaultValue": null,
+            "description": "BGP Autonomous System Number",
+            "displayName": "BGP Autonomous System Number",
+            "group": null,
+            "id": "6df0fdba-1e23-40a7-b9fd-7b5802124f78",
+            "instructionText": "64512",
+            "key": null,
+            "notParam": false,
+            "order": 7,
+            "paramArray": false,
+            "parameterName": "AutonomousSystemNumber",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "403cb8f7-a4bd-4ec0-a8fc-2b158955b118",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "INTEGER",
+            "defaultValue": null,
+            "description": "Neighbor BGP ASN",
+            "displayName": "Neighbor BGP ASN",
+            "group": null,
+            "id": "4f38acf3-816c-4941-ae61-faf7d86c3229",
+            "instructionText": "64512",
+            "key": null,
+            "notParam": false,
+            "order": 8,
+            "paramArray": false,
+            "parameterName": "NeighborBgpASN",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "8d4cfc99-5824-4879-b18b-4a483b4ab299",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "IPADDRESS",
+            "defaultValue": null,
+            "description": "Tunnel Subnet Mask of Cloud Router",
+            "displayName": "Tunnel Subnet Mask of Cloud Router",
+            "group": null,
+            "id": "5e83cd3a-2cb7-46d9-a70e-8ea83bf88edd",
+            "instructionText": "255.255.255.0",
+            "key": null,
+            "notParam": false,
+            "order": 2,
+            "paramArray": false,
+            "parameterName": "CloudRouterTunnelSubnetMask",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "b467aab1-198a-4b06-a608-ed3b5821a583",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "IPADDRESS",
+            "defaultValue": null,
+            "description": "Tunnel IP of Cloud Router",
+            "displayName": "Tunnel IP of Cloud Router",
+            "group": null,
+            "id": "6f8970bf-ffa1-475f-9903-8fee324663a5",
+            "instructionText": "Tunnel IP of Cloud Router",
+            "key": null,
+            "notParam": false,
+            "order": 1,
+            "paramArray": false,
+            "parameterName": "CloudRouterTunnelIpAddress",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "d9b7c72f-943c-4865-a5f0-9377e9c36afa",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "STRING",
+            "defaultValue": null,
+            "description": "Tunnel Source Interface of Cloud Router",
+            "displayName": "Tunnel Source Interface of Cloud Router",
+            "group": null,
+            "id": "b63fc755-c3fb-4dc5-9f1e-64ef7e8b5137",
+            "instructionText": "GigabitEthernet1",
+            "key": null,
+            "notParam": false,
+            "order": 3,
+            "paramArray": false,
+            "parameterName": "CloudRouterTunnelSource",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "0f40f445-34e9-4228-9cca-c379a7db034b",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "IPADDRESS",
+            "defaultValue": null,
+            "description": "Tunnel IP of Branch Router for BGP",
+            "displayName": "Tunnel IP of Branch Router for BGP",
+            "group": null,
+            "id": "50544283-4ff0-47d9-8404-65487857c7d7",
+            "instructionText": "Tunnel IP of Branch Router for BGP",
+            "key": null,
+            "notParam": false,
+            "order": 5,
+            "paramArray": false,
+            "parameterName": "BranchRouterTunnelIP",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "c67b9897-dc2b-4595-a5ce-4aaf67ef2752",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "IPADDRESS",
+            "defaultValue": null,
+            "description": "Tunnel Destination - Public IP Address of Branch Router",
+            "displayName": "Tunnel Destination - Public IP Address of Branch Router",
+            "group": null,
+            "id": "2bd07c05-6b64-4a78-9a37-2a1daf53ae3d",
+            "instructionText": "Public IP of Branch Router",
+            "key": null,
+            "notParam": false,
+            "order": 4,
+            "paramArray": false,
+            "parameterName": "BranchRouterPublicIpAddress",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "ebda580d-cc13-4e59-bdf7-bf96e82848d1",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        },
+        {
+            "binding": "",
+            "customOrder": 0,
+            "dataType": "STRING",
+            "defaultValue": null,
+            "description": "MTU for Tunnel",
+            "displayName": "Maximum Transmission Unit (MTU) for Tunnel",
+            "group": null,
+            "id": "f5a27653-0fd1-43ce-8f2f-6a4b310e5cdb",
+            "instructionText": "1400",
+            "key": null,
+            "notParam": false,
+            "order": 6,
+            "paramArray": false,
+            "parameterName": "mtu",
+            "provider": null,
+            "range": [],
+            "required": true,
+            "selection": {
+                "defaultSelectedValues": [],
+                "id": "f3f21914-f404-4832-8516-9a100aeed78b",
+                "selectionType": null,
+                "selectionValues": {}
+            }
+        }
+    ],
+    "validationErrors": {
+        "rollbackTemplateErrors": [],
+        "templateErrors": [],
+        "templateId": "2d14b0f8-728f-49ee-bab9-b886545b85ef"
+    }
+}
