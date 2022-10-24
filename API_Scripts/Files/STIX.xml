@@ -1,0 +1,75 @@
+<stix:STIX_Package 
+	xmlns:AddressObj="http://cybox.mitre.org/objects#AddressObject-2"
+	xmlns:FileObj="http://cybox.mitre.org/objects#FileObject-2"
+	xmlns:cybox="http://cybox.mitre.org/cybox-2"
+	xmlns:cyboxCommon="http://cybox.mitre.org/common-2"
+	xmlns:cyboxVocabs="http://cybox.mitre.org/default_vocabularies-2"
+	xmlns:exampledata="http://stix.exampledata.org"
+	xmlns:indicator="http://stix.mitre.org/Indicator-2"
+	xmlns:report="http://stix.mitre.org/Report-1"
+	xmlns:stix="http://stix.mitre.org/stix-1"
+	xmlns:stixCommon="http://stix.mitre.org/common-1"
+	xmlns:stixVocabs="http://stix.mitre.org/default_vocabularies-1"
+	xmlns:ttp="http://stix.mitre.org/TTP-1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="exampledata:Package-aff67001-72e7-4e29-a9a6-d727ae184641" version="1.2">
+    <stix:Indicators>
+        <stix:Indicator id="exampledata:indicator-c750e18a-8eba-44d1-992c-12008e5a9102" timestamp="2017-07-31T15:17:36.260048+00:00" xsi:type='indicator:IndicatorType'>
+            <indicator:Title>Weatherman PUA</indicator:Title>
+            <indicator:Type xsi:type="stixVocabs:IndicatorTypeVocab-1.1">Malware Artifacts</indicator:Type>
+            <indicator:Description>This is a set of false indicators for testing purposes and should not be used in production.</indicator:Description>
+            <indicator:Valid_Time_Position>
+                <indicator:Start_Time precision="second">2017-07-31T15:17:36.260679+00:00</indicator:Start_Time>
+                <indicator:End_Time precision="second">2017-08-07T15:17:36.260689+00:00</indicator:End_Time>
+            </indicator:Valid_Time_Position>
+            <indicator:Observable id="exampledata:Observable-855cacf3-aadc-4246-9140-dd033b03fe99">
+                <cybox:Observable_Composition operator="AND">
+                    <cybox:Observable id="exampledata:Observable-4d3cd2cd-647a-417f-a25a-16a2845d51c5">
+                        <cybox:Object id="exampledata:Address-76079685-ff2e-4bad-9b9e-b51ef0826f55">
+                            <cybox:Properties xsi:type="AddressObj:AddressObjectType" category="ipv4-addr">
+                                <AddressObj:Address_Value condition="Equals">198.18.133.200</AddressObj:Address_Value>
+                            </cybox:Properties>
+                        </cybox:Object>
+                    </cybox:Observable>
+                    <cybox:Observable id="exampledata:Observable-d1dd9da2-206d-4054-a1fd-909276190d8d">
+                        <cybox:Object id="exampledata:File-d3a755ca-a310-4dee-ac87-a6f6fd287bd5">
+                            <cybox:Properties xsi:type="FileObj:FileObjectType">
+                                <FileObj:Hashes>
+                                    <cyboxCommon:Hash>
+                                        <cyboxCommon:Type condition="Equals" xsi:type="cyboxVocabs:HashNameVocab-1.0">SHA256</cyboxCommon:Type>
+                                       
+                <cyboxCommon:Simple_Hash_Value condition="Equals" apply_condition="ANY">069a0cf7b58d45f08adea8005dc7737b1a7a55214c4cf1278d6cae5c4ac86a0c##comma##64057e95b7b04ed46991788012f1c5e3dcb1cc9ab25a85dd9c4214e208f7fcc3</cyboxCommon:Simple_Hash_Value>
+</cyboxCommon:Hash>
+                                </FileObj:Hashes>
+                            </cybox:Properties>
+                        </cybox:Object>
+                    </cybox:Observable>
+                </cybox:Observable_Composition>
+            </indicator:Observable>
+            <indicator:Indicated_TTP>
+                <stixCommon:TTP id="exampledata:ttp-e43e0467-8db0-dc33-f6e9-c70786ab6a25" timestamp="2017-07-31T15:17:36.260882+00:00" xsi:type='ttp:TTPType'>
+                    <ttp:Title>External TTP</ttp:Title>
+                </stixCommon:TTP>
+            </indicator:Indicated_TTP>
+            <indicator:Confidence timestamp="2017-07-31T15:17:36.260560+00:00">
+                <stixCommon:Value xsi:type="stixVocabs:HighMediumLowVocab-1.0">None</stixCommon:Value>
+            </indicator:Confidence>
+            <indicator:Producer>
+                <stixCommon:Identity>
+                    <stixCommon:Name>Cosive STIX Example Generator</stixCommon:Name>
+                </stixCommon:Identity>
+                <stixCommon:Time>
+                    <cyboxCommon:Produced_Time>2017-07-31T15:17:36.260472+00:00</cyboxCommon:Produced_Time>
+                </stixCommon:Time>
+            </indicator:Producer>
+        </stix:Indicator>
+    </stix:Indicators>
+    <stix:Reports>
+        <stix:Report timestamp="2017-07-31T15:17:36.259523+00:00" id="exampledata:Report-687e219e-1eaa-4d96-a136-72be6dfddc92" xsi:type='report:ReportType' version="1.0">
+            <report:Header>
+                <report:Title>[TESTING] Test Indicators</report:Title>
+                <report:Intent xsi:type="stixVocabs:ReportIntentVocab-1.0">Indicators - Watchlist</report:Intent>
+                <report:Description>These indicators are automatically generated and should not be used in live environments.</report:Description>
+            </report:Header>
+        </stix:Report>
+    </stix:Reports>
+</stix:STIX_Package>

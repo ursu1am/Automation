@@ -1,0 +1,112 @@
+import sys
+import requests
+import json
+import urllib3
+
+from urllib3.exceptions import InsecureRequestWarning  # for insecure https warnings
+from requests.auth import HTTPBasicAuth  # for Basic Auth
+
+from env_lab import DNAC_URL, DNAC_PASS, DNAC_USER
+
+urllib3.disable_warnings(InsecureRequestWarning)  # disable insecure https warnings
+
+DNAC_AUTH = HTTPBasicAuth(DNAC_USER, DNAC_PASS)
+
+
+def pprint(json_data):
+    """
+    Pretty print JSON formatted data
+    :param json_data: data to pretty print
+    :return None
+    """
+    print(json.dumps(json_data, indent=4, separators=(' , ', ' : ')))
+
+
+def get_dnac_jwt_token(dnac_auth):
+    """
+    Create the authorization token required to access Cisco DNA Center
+    Call to Cisco DNA Center - /api/system/v1/auth/login
+    :param dnac_auth - Cisco DNA Center Basic Auth string
+    :return Cisco DNA Center Auth Token
+    """
+
+    url = DNAC_URL + '/dna/system/api/v1/auth/token'
+    header = {'content-type': 'application/json'}
+    response = requests.post(url, auth=dnac_auth, headers=header, verify=False)
+    response_json = response.json()
+    dnac_jwt_token = response_json['Token']
+    return dnac_jwt_token
+
+
+def get_all_device_info(dnac_jwt_token):
+    """
+    The function will return all network devices info
+    :param dnac_jwt_token: Cisco DNA Center token
+    :return: Cisco DNA Center device inventory info
+    """
+    url = DNAC_URL + '/dna/intent/api/v1/network-device'
+    header = {'content-type': 'application/json', 'x-auth-token': dnac_jwt_token}
+    all_device_response = requests.get(url, headers=header, verify=False)
+    all_device_info = all_device_response.json()
+    return all_device_info['response']
+
+
+def get_device_id_name(device_name, dnac_jwt_token):
+    """
+    This function will find the Cisco DNA Center device id for the device with the name {device_name}
+    :param device_name: device hostname
+    :param dnac_jwt_token: Cisco DNA Center token
+    :return:
+    """
+    device_id = None
+    device_list = get_all_device_info(dnac_jwt_token)
+    for device in device_list:
+        if device['hostname'] == device_name:
+            device_id = device['id']
+    return device_id
+
+
+def get_device_info(device_id, dnac_jwt_token):
+    """
+    This function will retrieve all the information for the device with the Cisco DNA Center device id
+    :param device_id: Cisco DNA Center device_id
+    :param dnac_jwt_token: Cisco DNA Center token
+    :return: device info
+    """
+    url = DNAC_URL + '/dna/intent/api/v1/network-device?id=' + device_id
+    header = {'content-type': 'application/json', 'x-auth-token': dnac_jwt_token}
+    device_response = requests.get(url, headers=header, verify=False)
+    device_info = device_response.json()
+    return device_info['response'][0]
+
+
+def main(device_hostname):
+    """
+    This sample script will print the Cisco DNA Center device information for the device
+    with the name {device_hostname}
+    - it will identify if the device is managed by Cisco DNA Center
+    - retrieve the device information
+    :param device_hostname: the device hostname
+    :return: None
+    """
+
+    #  obtain the Cisco DNA Center Auth Token
+    dnac_token = get_dnac_jwt_token(DNAC_AUTH)
+
+    # find the Cisco DNA Center device id for the device with the name {device_hostname}
+    device_id = get_device_id_name(device_hostname, dnac_token)
+
+    # check if device is managed by Cisco DNA Center
+    if device_id is None:
+        print('\nThe device with the hostname: ', device_hostname, ' is not managed by Cisco DNA Center\n\n')
+    else:
+        # find the Cisco DNA Center device info for the device with the device id {device_id}
+        device_info = get_device_info(device_id, dnac_token)
+
+        # print the device information
+        print('\nThe device information for the device with the name: ' + device_hostname + '\n\n')
+        pprint(device_info)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1]))

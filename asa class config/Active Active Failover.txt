@@ -1,0 +1,332 @@
+R9: 
+ hostname R9
+in f0/0 
+no shut 
+ip address 10.1.1.10 255.255.255.0 
+ 
+ip route 0.0.0.0 0.0.0.0 10.1.1.1 
+!
+R10: 
+ 
+ hostname R10
+in f0/0 
+no shut 
+ip address 30.1.1.10 255.255.255.0 
+ 
+ip route 0.0.0.0 0.0.0.0 30.1.1.1 
+ !
+R11: 
+ 
+ hostname R11
+in f0/0 
+no shut 
+ip address 20.1.1.10 255.255.255.0 
+ 
+ip route 0.0.0.0 0.0.0.0 20.1.1.1 
+ !
+R12: 
+
+ hostname R12
+in f0/0 
+no shut 
+ip address 40.1.1.10 255.255.255.0 
+ 
+ip route 0.0.0.0 0.0.0.0 40.1.1.1 
+ !
+R9-11: 
+ 
+line vty 0 4 
+password cisco 
+transport input all 
+login 
+!
+SW4 
+ 
+Configure the vlan 
+
+ hostname SW4
+vlan 20 
+vlan 40 
+ 
+interface range  GigabitEthernet0/0-1 
+!
+ switchport trunk encapsulation dot1q  
+ switchport mode trunk  
+ no sh 
+ 
+interface GigabitEthernet0/2  
+no sh  
+switchport access vlan 20  
+switchport mode access 
+ no shut
+ 
+interface GigabitEthernet0/3  
+switchport access vlan 40  
+switchport mode access  
+no sh 
+ 
+ !
+ SW5 
+ 
+Configure the vlan 
+hostname SW5 
+vlan 10 
+vlan 30 
+! 
+interface range  GigabitEthernet0/2-3  
+switchport trunk encapsulation dot1q  
+switchport mode trunk  
+no sh 
+ !
+interface GigabitEthernet0/0  
+no sh  
+switchport access vlan 10  
+switchport mode access 
+ !
+! 
+interface GigabitEthernet0/1  
+switchport access vlan 30  
+switchport mode access  
+no sh 
+ !
+ 
+ 
+ 
+
+ Task1 Configure ASA for Active/Active failover 
+ 
+ 
+ Configure hostname as ASAp2 and ASAp3 
+ Your configuration should meet the following requirements: 
+o ASAp2
+‐ system 
+ Interface eth0.20 
+ vlan: 20 
+ Interface eth0.40
+  vlan: 40 
+  Interface eth1.10 
+  vlan: 10 
+  Interface eth1.30 
+  vlan: 30 
+  Failover: 
+ o Unit: Primary 
+ o Lan Interface: eth2 
+ o Primary
+ ‐ Standby:1.1.1.1-1.1.1.2/24  
+ o Name: LAN 
+ o Link Interfaces: eth3  
+ o Primary
+ ‐ Standby:2.2.2.1-2.2.2.2  
+ o Name: STATE 
+  Failover Group1: Primary 
+  Failover Group2: Secondary 
+ 
+ Failover: o ASAp3‐ system o Failover: o Unit: Secondary o Lan Interface: eth2 o Primary‐ Standby:1.1.1.1-1.1.1.2/24  o Name: LAN o Link Interfaces: eth3  o Primary‐ Standby:2.2.2.1-2.2.2.2  o Name: STATE  Failover Group1: Secondary  Failover Group2: Primary 
+ 
+Task2 Configure context on the ASAp2 
+ 
+  Configure the Context on the ASAp2 
+  Name: c1 
+ o Allocate Interfaces: eth0.20, eth1.10 and provide Labels Respectively: outside_c1, inside_c1 
+ o Join Failover Group: 1 
+ o URL: c1.cfg 
+ o For Inside Interface -- Make it visible 
+ o For Outside Interface - Make it invisible 
+  Name: c2 
+ o Allocate Interfaces: eth0.40, eth1.30 Labels Respectively: outside_c2, inside_c2 
+ o Join Failover Group:2 o URL: c2.cfg o For Inside Interface -- Make it visible 
+ o For Outside Interface - Make it invisible 
+  ASA1‐ c1 
+ o Interface inside_c1: 
+ o Address Primary‐ Standby:10.1.1.1-10.1.1.2  
+ o Name: inside o Interface outside_c1: 
+ o Address Primary‐ Standby:20.1.1.1-20.1.1.2  
+ o Name: outside  ASA1‐ c2 
+ o Interface inside_c2: o Address Primary
+ ‐ Standby:30.1.1.1-30.1.1.2  
+ o Name: inside 
+ o Interface outside_c2: 
+ o Address Primary
+ ‐ Standby:40.1.1.1-40.1.1.2  
+ o Name: outside 
+ 
+ Task3 Address Translation 
+ 
+ R9 (10.1.1.10) should be accessible from outside using outside interface with NAT 
+IP 50.50.50.50. Network object used for the translation should be named "R9_c1". 
+Use Auto NAT 
+ R10 (30.1.1.10) should be accessible from outside using the outside interface
+with NAT IP 60.60.60.60. Use the network object for the translation, 
+can use any name. Use Manual NAT 
+ 
+Task4 Traffic Filtering 
+ 
+ R9 should be accessible only from 20.1.1.10/24 network for the telnet traffic at port 23 
+and ICMP Echo message.  ACL for the traffic filtering should be named "O-I". 
+ ACL should be network and host specific. 
+ R10 should be accessible only from 40.1.1.10/24 network for the telnet traffic at port 23 
+and ICMP Echo message. 
+ ACL for the traffic filtering should be named "O-I". 
+ ACL should be network and host specific. 
+ 
+Configuration on the Firewall 
+ 
+ 
+ Configuration on the Firewall 
+ 
+ASA2p/ASA3p 
+ 
+Mode Multiple should be enabled if not, convert it into mode multiple 
+ 
+ASAp2 & ASAp3: 
+ 
+ASAp2# show mode Security context mode: multiple 
+ 
+&  
+ 
+ASAp3# show mode Security context mode: multiple 
+ 
+If not give global command 
+ 
+mode multiple 
+ 
+ 
+ASA2p 
+ 
+hostname ASAp2 
+ 
+interface Ethernet 0 no shut interface Ethernet 1 
+no shut interface Ethernet 2 no shut interface Ethernet 3 no shut 
+ 
+interface Ethernet 0.20 
+vlan 20 
+interface Ethernet 0.40 
+vlan 40 interface 
+Ethernet 1.10 
+vlan 10 
+interface Ethernet 1.30 
+vlan 30  
+ 
+Configuration on the Failover 
+ 
+failover lan unit primary failover lan interface LAN e2 
+failover link STATE e3 failover interface ip LAN 1.1.1.1 255.255.255.0 standby 1.1.1.2 
+failover interface ip STATE 2.2.2.1 255.255.255.0 standby 2.2.2.2 
+ 
+failover group 1 preempt primary 
+ 
+failover group 2 preempt secondary 
+ 
+ 
+ 
+Creating on the Context 
+ 
+context c1 
+allocate-interface ethernet0.20 outside_c1 
+allocate-interface ethernet1.10 inside_c1 visible 
+config-url c1.cfg 
+join-failover-group 1 
+ 
+context c2 
+allocate-interface ethernet0.40 outside_c2 
+allocate-interface ethernet1.30 inside_c2 visible 
+config-url c2.cfg 
+join-failover-group 2 
+ 
+ 
+Configuration on the Context 
+ 
+changeto context c1 
+ 
+interface inside_c1 nameif inside ip add 10.1.1.1 255.255.255.0 standby 10.1.1.2 
+no sh 
+ 
+interface outside_c1 nameif outside ip add 20.1.1.1 255.255.255.0 standby 20.1.1.2 
+no sh  
+ 
+Configuration on the NAT 
+ 
+ 
+object network R9_c1 
+host 10.1.1.10  
+nat (inside,outside) static 50.50.50.50 
+ 
+ 
+ 
+Configuration on the Access-list 
+ 
+access-list O-I extended permit tcp 20.1.1.0 255.255.255.0 10.1.1.0 255.255.255.0 eq 23 
+access-list O-I extended permit icmp 20.1.1.0 255.255.255.0 10.1.1.0 255.255.255.0 echo 
+ 
+access-group O-I in interface outside 
+ 
+ 
+Configuration on the Context 
+ 
+changeto context c2 
+ 
+interface inside_c2 
+nameif inside 
+ip add 30.1.1.1 255.255.255.0 standby 30.1.1.2 
+no sh 
+ 
+interface outside_c2 
+nameif outside 
+ip add 40.1.1.1 255.255.255.0 standby 40.1.1.2 
+no sh 
+ 
+ 
+Configuration on the NAT 
+ 
+object network R10_c2 
+host 30.1.1.10 
+nat (inside,outside) static 60.60.60.60 
+ 
+ 
+ 
+ 
+Configuration on the Access-list 
+ 
+access-list O-I extended permit tcp 40.1.1.0 255.255.255.0 30.1.1.0 255.255.255.0 eq 23 
+access-list O-I extended permit icmp 40.1.1.0 255.255.255.0 30.1.1.0 255.255.255.0 echo 
+access-group O-I in interface outside 
+ 
+ 
+ 
+ 
+changeto system 
+ 
+Configuration on the Firewall  
+ 
+ ASAp3: 
+ 
+interface e 2 no shut interface e 3 no shut 
+
+ 
+Configuration on the Failover 
+ 
+failover lan unit secondary 
+failover lan interface LAN e2 
+failover link STATE e3 failover interface ip LAN 1.1.1.1 255.255.255.0 standby 1.1.1.2 
+failover interface ip STATE 2.2.2.1 255.255.255.0 standby 2.2.2.2 
+ 
+failover group 1 preempt secondary 
+ 
+failover group 2 preempt primary 
+ 
+ 
+ASAp2 & ASAp3: 
+ 
+Enabling the failover 
+ 
+failover 
+ 
+ 
+Verifications: 
+ 
+ // Please refer video linl 
+ 
+ASAp2# show context  
+
+ASAp2# show failover state 
+

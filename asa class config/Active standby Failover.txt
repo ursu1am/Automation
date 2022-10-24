@@ -1,0 +1,98 @@
+ Active/Standby failover (R3, R4, ASAv2 & ASAv3)
+ 
+ Lab-Setup 
+ 
+ 
+ Configure R3 and R4 as per the below mentioned addressing scheme. 
+ Configure Telnet on All the router, with the password “cisco” 
+ Configure the default route on all the router, pointing towards ASA. 
+Configuration on Router 
+ 
+R3: 
+ // in lab we have different interfaces : 
+hostname R3 
+ 
+interface f0/0 no shut ip address 10.1.1.10 255.255.255.0 
+interface loopback 0 ip address 3.3.3.3 255.255.255.0 
+ 
+ip route 0.0.0.0 0.0.0.0 10.1.1.1 
+ 
+ 
+R4: 
+ 
+hostname R4 
+ 
+interface f 0/0 no shut ip address 20.1.1.10 255.255.255.0 
+ 
+interface loopback 0 
+ip address 4.4.4.4 255.255.255.0 
+ 
+ip route 0.0.0.0 0.0.0.0 20.1.1.1 
+ 
+ 
+ 
+Task1 Configure ASA for Active/Standby 
+ 
+ Configure hostname as ASAv2 and ASAv3 
+ Configure ASAv3 device to back up ASAv2 in the event of failure 
+ Configure gi0/2 as the failover link 
+ Configure gi0/3 as the Stateful link 
+ Authenticate the failover control messages using a key “cisco” 
+
+
+Configuration on ASA 
+ 
+ASAv2 
+ 
+hostname ASAv2 
+ 
+interface g 0/0 
+no shut 
+nameif outside 
+ip address 20.1.1.1 255.255.255.0 standby 20.1.1.2 
+ 
+interface g0/1 
+no shut 
+nameif inside 
+ip address 10.1.1.1 255.255.255.0 standby 10.1.1.2 
+ 
+interface g 0/2 no shut 
+ 
+interface g0/3 no shut 
+ 
+route outside 0.0.0.0 0.0.0.0 20.1.1.10 
+route inside 3.3.3.0 255.255.255.0 10.1.1.10 
+ 
+ 
+Configure the failover 
+failover lan unit primary 
+failover lan interface FO GigabitEthernet0/2 
+failover key cisco 
+failover link STATE GigabitEthernet0/3 
+failover interface ip FO 10.10.10.10 255.255.255.0 standby 10.10.10.11 
+failover interface ip STATE 20.20.20.20 255.255.255.0 standby 20.20.20.21 
+failover 
+ 
+ 
+ASAv3: 
+ 
+hostname ASAv3 
+ 
+interface g 0/2 no shut 
+ 
+interface g0/3 no shut 
+ 
+failover lan unit secondary 
+failover lan interface FO GigabitEthernet0/2 
+failover key cisco failover link STATE GigabitEthernet0/3 
+failover interface ip FO 10.10.10.10 255.255.255.0 standby 10.10.10.11 
+failover interface ip STATE 20.20.20.20 255.255.255.0 standby 20.20.20.21 
+
+Start the failover 
+ 
+ASAv2 
+ 
+ASAv2(config)# failover 
+ASAv3(config)# failover 
+
+ASAv2/act# show failover state 

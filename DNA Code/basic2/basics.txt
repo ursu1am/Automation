@@ -1,0 +1,21 @@
+!
+flow exporter 10.10.20.101
+ destination 10.10.20.101
+!
+!
+flow exporter 10.10.20.103
+ destination 10.10.20.103
+ transport udp 6007
+!
+!
+!
+interface Loopback11
+ description testing Python template script
+ ip address 11.11.11.11 255.255.255.255
+!
+
+!
+interface Loopback22
+ description testing Python template script
+ ip address 22.22.22.22 255.255.255.255
+!

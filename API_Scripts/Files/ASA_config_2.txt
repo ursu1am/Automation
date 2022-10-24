@@ -1,0 +1,16 @@
+ASA Version 9.6(2)
+
+object network net1
+ subnet 2.11.0.0 255.255.255.0
+
+object network net2
+ subnet 2.2.0.0 255.255.255.0
+
+nat (dmz1,dmz2) source static net1 net1 destination static net2 net2 no-proxy-arp
+
+time-range office_hours
+ periodic weekdays 09:00 to 17:00
+
+access-list timeacl extended permit ip any host 1.2.3.4 time-range office_hours
+
+access-group timeacl global

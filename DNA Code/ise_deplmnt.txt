@@ -1,0 +1,114 @@
+For VMware deployment follow de guide.
+
+https://www.cisco.com/c/en/us/td/docs/security/ise/2-4/install_guide/b_ise_InstallationGuide24/b_ise_InstallationGuide24_chapter_011.html#ID-1417-000001ed
+
+Virtial machine intial setup take about 30 minuts
+30 minuts to run initial setup
+more one hour to applications status be ready
+iNITIAL Deploy TIPs
+NTP IP address or url 
+a.st1.ntp.br or 200.160.7.186
+Domain name
+
+ISE initial setup take about 1 hour to be completd.
+
+#show application status ise
+ISE PROCESS NAME                       STATE            PROCESS ID
+--------------------------------------------------------------------
+Database Listener                      running          16057
+Database Server                        running          109 PROCESSES
+Application Server                     running          20157 //WebGUI
+Profiler Database                      running          17437
+ISE Indexing Engine                    running          21842
+AD Connector                           running          28801
+M&T Session Database                   running          17345
+M&T Log Collector                      running          20302
+M&T Log Processor                      running          20211
+Certificate Authority Service          running          28533
+EST Service                            not running
+SXP Engine Service                     disabled
+Docker Daemon                          running          24228
+TC-NAC Service                         disabled
+Wifi Setup Helper Container            running          28079
+ Wifi Setup Helper Vault               running          42
+ Wifi Setup Helper MongoDB             running          15
+ Wifi Setup Helper Web Server          running          229
+ Wifi Setup Helper Auth Service        running          132
+ Wifi Setup Helper Main Service        running          171
+ Wifi Setup Helper WLC Service         running          211
+pxGrid Infrastructure Service          disabled
+pxGrid Publisher Subscriber Service    disabled
+pxGrid Connection Manager              disabled
+pxGrid Controller                      disabled
+PassiveID WMI Service                  disabled
+PassiveID Syslog Service               disabled
+PassiveID API Service                  disabled
+PassiveID Agent Service                disabled
+PassiveID Endpoint Service             disabled
+PassiveID SPAN Service                 disabled
+DHCP Server (dhcpd)                    disabled
+DNS Server (named)                     disabled
+
+
+===========================================================================================================================
+
+ISE shutdown
+1. Application stop ise
+2. Halt
+
+!Check engine version
+show application version ise
+!Check application running on engine
+show applications status ise
+!Check routes
+show ip route
+!Check NTP
+show ntp
+!Check time
+show clock
+!Chek disk
+show disk
+
+Configure NTP
+
+>conf t
+#ntp server a.st1.ntp.br
+#clock timezone America/Sao_Paulo // GMT -3 afetado pelo horário de verão
+clock timezone Brazil/DeNoronha // GMT -2
+
+show clock
+show ntp
+show timezone
+show timezones
+
+Upgrade
+When you upgrade a node from the Admin portal, if the status does not change for a long time (and remains at 80%), 
+you can check the upgrade logs from the CLI or the status of the upgrade from the console. Log in to the CLI or 
+view the console of the Cisco ISE node to view the progress of upgrade. You can use the show logging application command 
+to view the upgrade-uibackend-cliconsole.log and upgrade-postosupgrade-yyyymmdd-xxxxxx.log.
+
+Backup 
+admin# conf t
+admin(config)# repository FTP_LOCAL
+admin(config-Repository)#url ftp://10.XX.0.10/
+admin(config-Repository)#user ftp_user password plain ftp_pass
+admin# backup bkp_config_11_12_19 repository FTP_LOCAL ise-config encryption-key plain Cisco123
+
+
+BEFORE REGISTER a NODE
+
+!Performe a name resolution to all ise node
+nslookup ise0x.domain.local
+
+Link CLI Guide
+https://www.cisco.com/c/en/us/td/docs/security/ise/1-3/cli_ref_guide/b_ise_CLIReferenceGuide/b_ise_CLIReferenceGuide_chapter_011.html
+
+ISE License
+https://community.cisco.com/t5/security-documents/ise-2-4-licensing-quick-access/ta-p/3653471
+
+Backup 
+https://brainwork.com.br/2019/12/16/backup-restore-cisco-ise-via-cli/
+
+
+Upgrade
+https://www.cisco.com/c/en/us/td/docs/security/ise/2-1/upgrade_guide/b_ise_upgrade_guide_21/b_ise_upgrade_guide_21_chapter_010.html

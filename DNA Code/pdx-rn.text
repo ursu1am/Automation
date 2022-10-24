@@ -1,0 +1,67 @@
+## ------ Nonessential services----
+!
+no service pad
+no service udp-small-servers
+no service tcp-small-servers
+no ip finger					   
+no ip bootp server
+no platform punt-keepalive disable-kernel-core
+no ip source-route
+no ip http server
+no ip http secure-server
+!
+!--access switch specific--
+no service dhcp
+!
+## ------ Active services----
+!
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec show-timezone
+service timestamps log datetime msec show-timezone
+service password-encryption
+!
+cdp run
+lldp run
+!
+## ------ Basic configuration----
+
+!
+#hostname ${hostname}
+!
+no aaa new-model
+!
+enable secret cisco123
+!
+username cisco privilege 15 secret cisco
+!
+ip domain-name dcloud.cisco.com
+!
+no ip domain-lookup
+!
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+ip ssh source-interface vlan1000
+!
+crypto key generate rsa general-keys modulus 2048 
+!
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause channel-misconfig
+errdisable recovery cause link-flap
+errdisable recovery cause psecure-violation
+errdisable recovery cause port-mode-failure
+errdisable recovery cause dhcp-rate-limit
+errdisable recovery cause mac-limit
+errdisable recovery cause inline-power
+!
+##---------Spanning Tree Protocol and Associated Protocols -------
+!
+spanning-tree mode rapid-pvst
+spanning-tree loopguard default
+spanning-tree portfast bpduguard default
+spanning-tree extend system-id
+!
+udld enable
+!

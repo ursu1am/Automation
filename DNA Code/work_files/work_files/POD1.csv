@@ -1,0 +1,4 @@
+name,serial,pid,workflow,hostname,mgmt
+POD1_edge1,01145678911,C9300-24P,POD1_WorkFlow,POD1_edge1,192.01.1.167
+POD1_edge2,01145678912,C9300-24P,POD1_WorkFlow,POD1_edge2,192.01.1.168
+POD1_edge3,01145678913,C9300-24P,POD1_WorkFlow,POD1_edge3,192.01.1.169

@@ -1,0 +1,97 @@
+All passwords:    C1sco12345!
+
+
+AAA test command:
+
+test aaa-server authentication ISE-AAA host 198.19.10.130 username ira password C1sco12345 
+
+
+Non-alphanumberic characters:
+
+
+~ ` ! @ # $ % ^ & * ( ) - _ = + [ ] { } / \ | ; : ' " , . < > ?
+
+
+EIGRP FlexConfig Object
+
+router eigrp 10
+ network 192.168.1.0 255.255.255.0
+
+
+CSR NAT configuration (if you need to bypass the NGFW)
+
+config t
+access-list 100 permit ip 198.19.10.0 0.0.0.255 any
+ip nat inside source list 100 interface g3
+int g1
+ ip nat inside
+int g32
+ ip nat outside
+
+URLs:
+
+http://198.19.10.200/files/STIX.xml
+http://hailataxii.com/taxii-discovery-service
+
+Wget commands:
+
+wget -t 1 outside/files/ProjectX.pdf
+wget -t 1 outside/files/test3.avi
+wget -t 1 outside/files/Zombies.pdf
+wget -t 1 outside/malware/Buddy.exe
+
+wget -t 1 developmentserver.com/misc/Tron.html
+wget -t 1 outside/files/ProjectX.doc
+
+wget -t 1 isolated/files/ProjectX.pdf
+wget -t 1 isolated/files/ProjectX.pdf
+wget -t 1 isolated/files/Zombies.pdf
+
+wget --bind-address=198.19.10.201 192.168.1.201
+wget --bind-address=198.19.10.201 192.168.1.201 -e use_proxy=yes -e http_proxy=198.19.10.101
+wget --bind-address=198.19.10.200 192.168.1.201 -e use_proxy=yes -e http_proxy=198.19.10.101
+
+wget outside/files/test2.mov
+wget outside/files/ProjectX.doc
+
+wget -t 1 10.3.0.1/files/ProjectX.pdf
+wget -t 1 10.3.0.10/files/test3.avi
+wget -t 1 10.3.0.1/files/Zombies.pdf
+wget 10.3.0.1
+wget 10.3.0.2
+
+wget -t 1 developmentserver.com
+wget -t 1 69.163.152.179
+
+
+
+System support commands:
+
+system support ssl-client-hello-enabled feature false
+system support ssl-client-hello-display
+pmtool restartbytype DetectionEngine
+system support ssl-client-hello-reset
+system support ssl-client-hello-tuning ciphers_remove 47,156
+
+
+
+HTTP Header for a custom Application (if you want to test using the Linux client):
+
+
+This HTTP request header does not match TestApp.
+Type <ENTER> twice to complete the HTTP request header.
+
+GET / HTTP/1.1
+User-Agent: DontTestApp
+Host: server
+
+This HTTP request header matches TestApp.
+Type <ENTER> twice to complete the HTTP request header.
+
+GET / HTTP/1.1
+User-Agent: TestApp
+Host: server
+
+Configuring Realm:   Administrator@dcloud.local
+
+                     dc=dcloud,dc=local

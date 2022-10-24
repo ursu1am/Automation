@@ -1,0 +1,6 @@
+{
+	"dnacurl": "https://sandboxdnac.cisco.com:443",
+	"username": "devnetuser",
+	"passwd": "Cisco123!"
+	"version": "2.1.2"
+}

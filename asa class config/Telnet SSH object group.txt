@@ -1,0 +1,26 @@
+ASAv1: 
+!
+object network R1-loop  
+host 1.1.1.1 
+object network R2-loop  
+host 2.2.2.2 
+!
+object-group service TELNET-SSH tcp  
+port-object eq telnet  
+port-object eq ssh 
+! 
+access-list OUT-IN extended permit tcp object R2-loop object R1-loop object-group TELNET-SSH 
+access-group OUT-IN in interface outside 
+!
+telnet 0.0.0.0 0.0.0.0 inside 
+telnet 0.0.0.0 0.0.0.0 outside 
+passwd cisco  
+domain-name cisco.com 
+crypto key generate rsa modulus 1024  
+!
+ssh 0.0.0.0 0.0.0.0 inside 
+ssh 0.0.0.0 0.0.0.0 outside 
+!
+username admin password cisco privilege 15   
+aaa authentication ssh console LOCAL 
+!

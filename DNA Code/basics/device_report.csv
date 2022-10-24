@@ -1,0 +1,4 @@
+device_hostname,device_type,device_software_version,device_management_ip,device_sn,device_mem,device_mgmt_state,device_reach_fail,device_support
+cat_9k_1,Cisco Catalyst 9300 Switch,17.3.1,10.10.22.66,FCW2136L0AK,,Managed,,Supported
+cat_9k_2,Cisco Catalyst 9300 Switch,16.6.4a,10.10.22.70,FCW2140L039,,Managed,,Supported
+cs3850.abc.inc,Cisco Catalyst38xx stack-able ethernet switch,16.9.7,10.10.22.73,FOC1833X0AR,,Managed,,Supported

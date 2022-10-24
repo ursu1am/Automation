@@ -1,0 +1,89 @@
+Task-1 Configure Eigrp between R1 and ASA1v 
+ 
+? Remove the Default route from R1 and static route from ASA1v. ? Configure Eigrp AS 10 on R1 and ASA1v ? Addresses the Loopback and 10.1.1.0 network in AS ? Eigrp Messages should be authenticate using MD5 with key “CCNP” and key-id as 1 on ASAv1 ? Create the Key chain and key string name as “CCNP” along with key 1 on R1. 
+ 
+Verification 
+ 
+? Check the Eigrp Neighbourship ? Check the routes on ASAv1 and R1 
+
+Configuration on ASA 
+ 
+ASAv1: 
+ 
+ASAv1(config)#show running-config route route outside 0.0.0.0 0.0.0.0 20.1.1.10 1 route inside 1.1.1.0 255.255.255.0 10.1.1.10 1 
+ 
+ASAv1(config)# no route outside 0.0.0.0 0.0.0.0 20.1.1.10 1 ASAv1(config)# no route inside 1.1.1.0 255.255.255.0 10.1.1.10 1 
+ 
+ 
+R1-ASA:EIGRP 
+ 
+R1: 
+router eigrp 10  network 1.1.1.0 0.0.0.255  network 10.1.1.10 0.0.0.0 
+
+ no auto-summary 
+ 
+key chain CCNP key 1 key-string CCNP 
+ 
+interface FastEthernet0/0 ip authentication mode eigrp 10 md5 ip authentication key-chain eigrp 10 CCNP 
+ 
+ 
+ASAv1: 
+ 
+router eigrp 10 no auto-summary network 10.1.1.1 255.255.255.255 
+ 
+interface GigabitEthernet0/1 authentication key eigrp 10 CCNP key-id 1 authentication mode eigrp 10 md5 
+ 
+ 
+Verification: 
+ 
+ASAv1#show eigrp neighbors  
+
+Task-2 Configure OSPF between R2 and ASA1v 
+ 
+? Remove the Default route from R1 and static route from ASA1v. ? Configure OSPF Area 0 on the outside interface. ? Authenticate using the interface authentication with password of “CCNP” and key ID 1.  ? Use 20.20.20.20 as OSPF Router ID on ASA1v ? Use 2.2.2.2. as a Router ID on R2.  
+ 
+ 
+Verification 
+ 
+? Check the OSPF Neighbourship ? Check the routes on ASAv1 and R2 
+ASAv1: 
+ 
+router ospf 1  router-id 20.20.20.20  network 20.1.1.1 255.255.255.255 area 0 
+ 
+interface GigabitEthernet0/0  ospf authentication message-digest  ospf message-digest-key 1 md5 CCNP 
+ 
+ 
+Configuration on Router 
+ 
+R2: 
+ 
+router ospf 1  router-id 2.2.2.2  log-adjacency-changes  network 2.2.2.0 0.0.0.255 area 0  network 20.1.1.10 0.0.0.0 area 0 
+ 
+! interface FastEthernet0/0 
+ ip ospf authentication message-digest  ip ospf message-digest-key 1 md5 CCNP 
+ 
+ 
+Verifications: 
+ 
+ASAv1# show ospf neighbor  
+
+
+Task-3 Configure Redistribution between Routing Protocols 
+ 
+? Configure the route redistribution between the OSPF and EIGRP. ? So that entire network gain the full reachability. 
+
+Redistribute OSPF --- EIGRP on ASAv1 
+ 
+ASAv1: 
+ 
+router eigrp 10 redistribute ospf 1 metric 10000 100 255 1 1500 
+ 
+router ospf 1 redistribute eigrp 10 subnets 
+ 
+ 
+ 
+Verification: 
+ 
+R1: 
+ 
+R1#show ip route 

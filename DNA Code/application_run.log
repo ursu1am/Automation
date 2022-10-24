@@ -1,0 +1,47 @@
+2021-03-22 19:28:01.123 DEBUG connectionpool - _new_conn: Starting new HTTPS connection (1): sandboxdnac.cisco.com:443
+2021-03-22 19:28:01.998 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "POST /dna/system/api/v1/auth/token HTTP/1.1" 200 734
+2021-03-22 19:28:02.013 DEBUG connectionpool - _new_conn: Starting new HTTPS connection (1): sandboxdnac.cisco.com:443
+2021-03-22 19:28:02.948 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "GET /dna/intent/api/v1/event/subscription?eventIds=NETWORK-CLIENTS-3-506&limit=100 HTTP/1.1" 200 2
+2021-03-22 19:33:04.398 DEBUG connectionpool - _new_conn: Starting new HTTPS connection (1): sandboxdnac.cisco.com:443
+2021-03-22 19:33:05.327 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "POST /dna/system/api/v1/auth/token HTTP/1.1" 200 734
+2021-03-22 19:33:05.731 DEBUG connectionpool - _new_conn: Starting new HTTPS connection (1): sandboxdnac.cisco.com:443
+2021-03-22 19:33:06.504 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "GET /dna/intent/api/v1/onboarding/pnp-device?state=Unclaimed HTTP/1.1" 200 None
+2021-03-22 19:33:06.785 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "GET /dna/intent/api/v1/network-device?reachabilityStatus=Unreachable HTTP/1.1" 200 None
+2021-03-22 19:33:07.273 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "GET /dna/intent/api/v1/site?name=Global HTTP/1.1" 200 260
+2021-03-22 19:33:08.475 DEBUG connectionpool - _make_request: https://sandboxdnac.cisco.com:443 "GET /dna/intent/api/v1/membership/99d03b90-d16e-4e3f-8cd0-a0231d874844 HTTP/1.1" 200 None
+2021-03-22 19:33:08.534 DEBUG eucjpprober - feed: EUC-JP Japanese prober hit error at byte 3404
+2021-03-22 19:33:08.547 DEBUG mbcharsetprober - feed: EUC-KR Korean prober hit error at byte 3404
+2021-03-22 19:33:08.551 DEBUG mbcharsetprober - feed: CP949 Korean prober hit error at byte 3404
+2021-03-22 19:33:08.554 DEBUG mbcharsetprober - feed: Big5 Chinese prober hit error at byte 3405
+2021-03-22 19:33:08.557 DEBUG mbcharsetprober - feed: EUC-TW Taiwan prober hit error at byte 3404
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: utf-8  confidence = 0.7525
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: SHIFT_JIS Japanese confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: EUC-JP not active
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: GB2312 Chinese confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: EUC-KR not active
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: CP949 not active
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: Big5 not active
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: EUC-TW not active
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: windows-1251 Russian confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: KOI8-R Russian confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: ISO-8859-5 Russian confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: MacCyrillic Russian confidence = 0.0
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: IBM866 Russian confidence = 0.0
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: IBM855 Russian confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: ISO-8859-7 Greek confidence = 0.0
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: windows-1253 Greek confidence = 0.0
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: ISO-8859-5 Bulgairan confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: windows-1251 Bulgarian confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: TIS-620 Thai confidence = 0.01
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: ISO-8859-9 Turkish confidence = 0.5127477699253151
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: windows-1255 Hebrew confidence = 0.0
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: windows-1255 Hebrew confidence = 0.0
+2021-03-22 19:33:08.580 DEBUG charsetgroupprober - get_confidence: windows-1255 Hebrew confidence = 0.0
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: utf-8  confidence = 0.7525
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: SHIFT_JIS Japanese confidence = 0.01
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: EUC-JP not active
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: GB2312 Chinese confidence = 0.01
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: EUC-KR not active
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: CP949 not active
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: Big5 not active
+2021-03-22 19:33:08.581 DEBUG charsetgroupprober - get_confidence: EUC-TW not active
