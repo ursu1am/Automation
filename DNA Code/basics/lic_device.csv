@@ -1,5 +1,0 @@
-Hostname,Model ,Serial Number,Mgmt Address,License 1,License 2
-asr1001-x.abc.inc,Cisco ASR 1001-X Router,FXS1932Q1SE,10.10.22.253,adventerprise,interface_10g
-cat_9k_1,Cisco Catalyst 9300 Switch,FCW2136L0AK,10.10.22.66
-cat_9k_2,Cisco Catalyst 9300 Switch,FCW2140L039,10.10.22.70,network-advantage,dna-advantage
-cs3850.abc.inc,Cisco Catalyst38xx stack-able ethernet switch,FOC1833X0AR,10.10.22.73

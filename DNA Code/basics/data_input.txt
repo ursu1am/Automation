@@ -1,5 +1,0 @@
-{
-"device": "cs3850.abc.inc",
-"project": "DayN_CLI_Templates",
-"template": "basic_template.txt"
-}

@@ -1,4 +1,0 @@
-{
-"project": "DayN_CLI_Templates",
-"template": "basic_template2.txt"
-}

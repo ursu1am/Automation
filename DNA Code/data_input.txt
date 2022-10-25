@@ -1,5 +1,0 @@
-{
-"device": "c3850-1.dcloud.cisco.com",
-"project": "DayN_Templates",
-"template": "pdx.txt"
-}

@@ -1,3 +1,0 @@
-leaf1.test.com
-leaf2.test.com
-spine1.test.com

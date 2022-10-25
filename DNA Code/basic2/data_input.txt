@@ -1,5 +1,0 @@
-{
-"project": "CLI_Templates555",
-"template": "basics.txt"
-}
-
